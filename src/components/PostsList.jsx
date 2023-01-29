@@ -1,22 +1,16 @@
 import useSWR from "swr";
-
 import {
   getPostsByUserId,
   postsUrlEndpoint as postsCacheKey,
 } from "../api/postsApi";
-
 import {
   getUserById,
   usersUrlEndpoint as usersCacheKey,
 } from "../api/usersApi";
-
 import Post from "./Post";
-import SkeletonPost from "./skeletons/SkeletonPost";
 
 const PostsList = ({ currentUserId }) => {
   const {
-    isLoading,
-    error,
     data: posts,
   } = useSWR(
     [postsCacheKey, currentUserId],
@@ -25,8 +19,6 @@ const PostsList = ({ currentUserId }) => {
   );
 
   const {
-    isLoading: isLoadingUser,
-    error: userError,
     data: user,
   } = useSWR(
     posts?.length ? [usersCacheKey, currentUserId] : null,
